@@ -11,7 +11,6 @@ from . forms import RoomForm
 
 
 def loginPage(request):
-
     page = 'login'
     if request.user.is_authenticated:
         return redirect('home')
@@ -67,8 +66,9 @@ def home(request):
 
     topics = Topic.objects.all()
     room_count = rooms.count()
+    room_messages = Message.objects.filter(Q(room__name__icontains=q))
 
-    context = {'rooms':rooms, 'topics':topics, 'room_count':room_count}
+    context = {'rooms':rooms, 'topics':topics, 'room_count':room_count, 'room_messages':room_messages}
     return render(request,'base/home.html', context)
 
 
